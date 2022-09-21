@@ -1,21 +1,21 @@
 pipeline {
     agent {
-        label 'master'
+        label 'main'
     }
 
     environment {
-      GITURL= 'https://github.com/hoangviet148/k8s-microservices.git'
+      GITURL= 'https://github.com/SLHolmess/project3.git'
       IMAGE = "14802000/books"
       IMAGE_REGISTRY = "https://index.docker.io/v1/"
-      registryCredential = 'hoangviet148-dockerhub'
-      gitCredential = "hoangviet148-github"
+      registryCredential = 'minh-dockerhub'
+      gitCredential = "minh-github"
       gitCredentialssh = "hoangviet148-github-sshkey"
       private_ssh_key_path = "/root/.ssh/id_rsa"
 
       // deployment repo
-      BUILD_USER = 'hoangviet148'
-      BUILD_USER_EMAIL = 'nnvvhh148@gmail.com'
-      DEPLOYMENT_URL = 'git@github.com:hoangviet148/k8s-microservices.git'
+      BUILD_USER = 'SLHolmess'
+      BUILD_USER_EMAIL = 'ngocminh2962000@gmail.com'
+      DEPLOYMENT_URL = 'git@github.com:SLHolmess/project3.git'
     }
 
     stages {
