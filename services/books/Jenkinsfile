@@ -59,8 +59,7 @@ pipeline {
     //             }
     //         }
     //     }    
-    // }
-
+    }
     post { 
       always {
             echo  "End pipeline"
