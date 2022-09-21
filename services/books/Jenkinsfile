@@ -1,15 +1,15 @@
 pipeline {
-    agent {
-        label 'main'
-    }
+    // agent {
+    //     label ''
+    // }
 
     environment {
       GITURL= 'https://github.com/SLHolmess/project3.git'
-      IMAGE = "14802000/books"
+      IMAGE = "slholmess/books"
       IMAGE_REGISTRY = "https://index.docker.io/v1/"
       registryCredential = 'minh-dockerhub'
       gitCredential = "minh-github"
-      gitCredentialssh = "hoangviet148-github-sshkey"
+      gitCredentialssh = "minh-github-sshkey"
       private_ssh_key_path = "/root/.ssh/id_rsa"
 
       // deployment repo
@@ -45,21 +45,21 @@ pipeline {
             }
         }
 
-        stage("update docker tag") {
-            steps {
-                    withCredentials([sshUserPrivateKey(credentialsId: '$$gitCredentialssh', keyFileVariable: '$$private_ssh_key_path')]) {
-                    sh """
-                        git config --global user.name "$BUILD_USER"
-                        git config --global user.email "$BUILD_USER_EMAIL"
-                        rm -rf k8s-microservices
-                        git clone ${DEPLOYMENT_URL} && cd k8s-microservices && \
-                        sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/booksbooks-deployment.yaml && \
-                        git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DEPLOYMENT_URL}
-                    """
-                }
-            }
-        }    
-    }
+    //     stage("update docker tag") {
+    //         steps {
+    //                 withCredentials([sshUserPrivateKey(credentialsId: '$$gitCredentialssh', keyFileVariable: '$$private_ssh_key_path')]) {
+    //                 sh """
+    //                     git config --global user.name "$BUILD_USER"
+    //                     git config --global user.email "$BUILD_USER_EMAIL"
+    //                     rm -rf k8s-microservices
+    //                     git clone ${DEPLOYMENT_URL} && cd k8s-microservices && \
+    //                     sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/booksbooks-deployment.yaml && \
+    //                     git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DEPLOYMENT_URL}
+    //                 """
+    //             }
+    //         }
+    //     }    
+    // }
 
     post { 
       always {
