@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: bookapp-cm
+#  namespace: bookapp
+  labels:
+    component: bookapp-cm
+data:
+  DB_NAME: mongodb
+  DB_HOST: mongodb
+  DB_PORT: "27017"

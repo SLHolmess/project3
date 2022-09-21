@@ -1,0 +1,2 @@
+password jenkin: b0cb36eb59ca4138810c10dfeb6445c0
+password argocd: kMYIb9M8rEL3f8pb

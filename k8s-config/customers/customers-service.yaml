@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: customers
+  labels: 
+    component: customers
+spec:
+  selector: # service su dung de biet pod nao minh can quan ly
+    component: customers-service
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
+      name: http

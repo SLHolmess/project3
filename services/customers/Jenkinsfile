@@ -1,0 +1,67 @@
+pipeline {
+    agent {
+        label 'master'
+    }
+
+    environment {
+      GITURL= 'https://github.com/hoangviet148/k8s-microservices.git'
+      IMAGE = "14802000/customers"
+      IMAGE_REGISTRY = "https://index.docker.io/v1/"
+      registryCredential = 'hoangviet148-dockerhub'
+      gitCredential = "hoangviet148-github"
+
+      // docker-compose repo
+      BUILD_USER = 'hoangviet148'
+      BUILD_USER_EMAIL = 'nnvvhh148@gmail.com'
+      DOCKER_COMPOSE_URL = 'https://${username}:${password}@github.com/csd-build/esb/portainer-compose.git'
+    }
+
+    stages {
+        stage('Check-out GIT'){
+            steps{
+                git credentialsId: "$gitCredential", url: "$GITURL"
+            }
+        }
+
+        stage('build-image'){
+            steps {
+                script {
+                    env.TIMESTRAP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M%S').trim()
+                    env.DOCKER_TAG = "${TIMESTRAP}_${BUILD_NUMBER}"
+                    sh 'docker build ./services/customers -t $IMAGE:$DOCKER_TAG'
+                }
+            }
+        }   
+
+        stage("push Image ") {
+            steps{
+                script {
+                    docker.withRegistry( "$IMAGE_REGISTRY", registryCredential ) {
+                    sh 'docker push $IMAGE:$DOCKER_TAG'
+                    }
+                }
+            }
+        }
+
+        // stage("update docker tag") {
+        //     steps {
+        //             withCredentials([usernamePassword(passwordVariable : 'password' ,usernameVariable : 'username' ,credentialsId : "$gitCredential" ,)]) {
+        //             sh """
+        //                 git config --global user.name "$BUILD_USER"
+        //                 git config --global user.email "$BUILD_USER_EMAIL"
+        //                 rm -rf portainer-compose
+        //                 git clone ${DOCKER_COMPOSE_URL} && cd portainer-compose
+        //                 sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" ./esb.yaml
+        //                 git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DOCKER_COMPOSE_URL}
+        //             """
+        //         }
+        //     }
+        // }    
+    }
+
+    post { 
+      always {
+            echo  "End pipeline"
+        }
+    }
+}

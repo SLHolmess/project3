@@ -1,0 +1,7 @@
+curl -X POST  http://bookapp.com/customer/create -H 'Content-Type: application/json' -d '{"name": "hoang","age": "22","address":"HH1"}'
+
+curl -X POST  http://bookapp.com/book/create -H 'Content-Type: application/json' -d '{"title": "Lord of the rings","author": "hoang","numberPages": "300","publisher":"NXB Tuoi Tre"}'
+
+kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30000}]'
+
+curl -X "DELETE" http://bookapp.com/customer/deleteById/63296e2ea3995d4b6e672b39

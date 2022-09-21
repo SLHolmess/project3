@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orders-service
+  labels:
+    component: orders-service
+spec:
+  revisionHistoryLimit: 2
+  replicas: 2
+  strategy: # change here
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      component: orders-service
+  template:
+    metadata:
+      labels:
+        component: orders-service
+    spec:
+      containers:
+        - name: orders-service
+          image: 14802000/orders:latest
+          ports:
+          - containerPort: 5000
+          envFrom:
+            - configMapRef:
+                name: bookapp-cm
