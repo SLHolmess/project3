@@ -1,7 +1,9 @@
 pipeline {
-    // agent {
-    //     label ''
-    // }
+    agent {
+        label 'Built-In Node'
+    }
+
+    // agent any
 
     environment {
       GITURL= 'https://github.com/SLHolmess/project3.git'
