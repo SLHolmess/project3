@@ -55,6 +55,7 @@ pipeline {
                         git config --global user.name "$BUILD_USER"
                         git config --global user.email "$BUILD_USER_EMAIL"
                         ls
+                        rm -rf project3
                         git clone ${GITURL} && cd project3 && \
                         sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/books/books-deployment.yaml && \
                         cat k8s-config/books/books-deployment.yaml && cat services/books/app/books.js && git status && git add . && git commit -m "update tag: ${DOCKER_TAG}" && git push --set-upstream origin main
