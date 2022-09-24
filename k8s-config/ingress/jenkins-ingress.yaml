@@ -12,7 +12,7 @@ spec:
         port:
           number: 8080
   rules:
-  - host: jenkinstest.bkav.com # domain name
+  - host: jenkins.om.com # domain name
     http:
       paths:
       - path: /

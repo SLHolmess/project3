@@ -1,2 +1,9 @@
-password jenkin: b0cb36eb59ca4138810c10dfeb6445c0
+password jenkin: a71e814c001d43fa9ecc3b21a6c69eee
 password argocd: kMYIb9M8rEL3f8pb
+
+docker run -u 0 --privileged --name jenkin -it -d -p 8080:8080 -p 50000:50000 -v /var/run/docker.sock:/var/run/docker.sock -v $(which docker):/usr/bin/docker -v /home/jenkins_home:/var/jenkins_home  jenkins/jenkins:lts
+
+
+                        git config --global user.name "$BUILD_USER"
+                        git config --global user.email "$BUILD_USER_EMAIL"
+                        git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DEPLOYMENT_URL}
