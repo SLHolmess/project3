@@ -57,7 +57,7 @@ pipeline {
                         ls
                         rm -rf project3
                         sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/books/books-deployment.yaml && \
-                        git add . && git commit -m "update tag: ${DOCKER_TAG}" && git push origin main
+                        git add . && git commit -m "update tag: ${DOCKER_TAG}" && git branch --set-upstream-to origin/master
                     """
                 // }
                 
