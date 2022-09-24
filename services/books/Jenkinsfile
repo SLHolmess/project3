@@ -52,10 +52,12 @@ pipeline {
             steps {
                 //     withCredentials([sshUserPrivateKey(credentialsId: '$$gitCredentialssh', keyFileVariable: '$$private_ssh_key_path')]) {
                     sh """
-                        rm -rf k8s-microservices
-                        git clone ${GITURL} && cd k8s-microservices && \
-                        sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/booksbooks-deployment.yaml && \
-                        git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${GITURL}
+                        git config --global user.name "$BUILD_USER"
+                        git config --global user.email "$BUILD_USER_EMAIL"
+                        ls
+                        git clone ${GITURL} && cd project && \
+                        sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/books/books-deployment.yaml && \
+                        git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push origin main
                     """
                 // }
                 
