@@ -18,7 +18,6 @@ pipeline {
       BUILD_USER = 'SLHolmess'
       BUILD_USER_EMAIL = 'ngocminh2962000@gmail.com'
       DEPLOYMENT_URL = 'git@github.com:SLHolmess/project3.git'
-    //   GIT_PASSWORD = 'minhminh296'
     }
 
     stages {
@@ -52,7 +51,6 @@ pipeline {
         stage("update docker tag") {
             steps {
                     withCredentials([sshUserPrivateKey(credentialsId: 'minh-github-sshkey', keyFileVariable: '/root/.ssh/id_rsa')]) {
-                    // withCredentials([usernamePassword(credentialsId: '$$gitCredential', passwordVariable: '$GIT_PASSWORD', usernameVariable: '$BUILD_USER')]) {
                     sh """
                         git config --global user.name "$BUILD_USER"
                         git config --global user.email "$BUILD_USER_EMAIL"
