@@ -7,3 +7,5 @@ docker run -u 0 --privileged --name jenkin -it -d -p 8080:8080 -p 50000:50000 -v
                         git config --global user.name "$BUILD_USER"
                         git config --global user.email "$BUILD_USER_EMAIL"
                         git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DEPLOYMENT_URL}
+
+                        git clone ${GITURL} && cd project3 && \
