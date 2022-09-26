@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: books-service
-          image: slholmess/books:20220926170851_45
+          image: slholmess/books:20220926170925_46
           ports:
           - containerPort: 3000
           envFrom:
