@@ -21,12 +21,12 @@ pipeline {
     }
 
     stages {
-        stage('Check-out GIT'){
-            steps{
-                // git credentialsId: "$gitCredential", url: "$GITURL"
-                git url:'https://github.com/SLHolmess/project3', branch:'main'
-            }
-        }
+        // stage('Check-out GIT'){
+        //     steps{
+        //         // git credentialsId: "$gitCredential", url: "$GITURL"
+        //         git url:'https://github.com/SLHolmess/project3', branch:'main'
+        //     }
+        // }
 
         stage('build-image'){
             steps {
