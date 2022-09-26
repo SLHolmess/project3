@@ -9,3 +9,5 @@ docker run -u 0 --privileged --name jenkin -it -d -p 8080:8080 -p 50000:50000 -v
                         git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DEPLOYMENT_URL}
 
                         git clone ${GITURL} && cd project3 && \
+
+ngrok config add-authtoken 2FJLFBDlTZUUOak2NMcqr5wWFpB_3DjHYWHoDRVMtVBnWesUf
