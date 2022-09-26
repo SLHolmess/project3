@@ -12,7 +12,7 @@ app.use(express.json())
 app.post('/book/create', (req, res) => {
     const newBook = new Book({...req.body});
     newBook.save().then(() => {
-          res.send('New Book added successfully!9')
+          res.send('New Book added successfully!9');
     }).catch((err) => {
          res.status(500).send('Internal Server Error!');
     })
