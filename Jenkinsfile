@@ -1,8 +1,7 @@
 pipeline {
     // agent {
-    //     label 'Built-In Node'
+    //     label 'master'
     // }
-
     agent any
 
     environment {
@@ -23,8 +22,7 @@ pipeline {
     stages {
         // stage('Check-out GIT'){
         //     steps{
-        //         // git credentialsId: "$gitCredential", url: "$GITURL"
-        //         git url:'https://github.com/SLHolmess/project3', branch:'main'
+        //         git credentialsId: "$gitCredential", url: "$GITURL"
         //     }
         // }
 
@@ -33,7 +31,7 @@ pipeline {
                 script {
                     env.TIMESTRAP = sh(returnStdout: true, script: 'date +%Y%m%d%H%M%S').trim()
                     env.DOCKER_TAG = "${TIMESTRAP}_${BUILD_NUMBER}"
-                    sh 'docker build ./services/books -t $IMAGE:$DOCKER_TAG'
+                    sh 'docker build ./services/customers -t $IMAGE:$DOCKER_TAG'
                 }
             }
         }   
@@ -50,22 +48,21 @@ pipeline {
 
         stage("update docker tag") {
             steps {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'minh-github-sshkey', keyFileVariable: '/root/.ssh/id_rsa')]) {
+                    wwithCredentials([sshUserPrivateKey(credentialsId: 'minh-github-sshkey', keyFileVariable: '/root/.ssh/id_rsa')]) {
                     sh """
                         git config --global user.name "$BUILD_USER"
                         git config --global user.email "$BUILD_USER_EMAIL"
-                        ls
                         rm -rf project3
-                        git clone ${DEPLOYMENT_URL} && cd project3 && git checkout book-service && \
-                        sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/books/books-deployment.yaml && \
-                        cat k8s-config/books/books-deployment.yaml && cat services/books/app/books.js && git status && git add . && git commit -m "update tag: ${DOCKER_TAG}" && git config --list && \
+                        git clone ${DEPLOYMENT_URL} && cd project3 && git checkout deploy \
+                        sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/customers/customers-deployment.yaml && \
+                        cat k8s-config/customers/customers-deployment.yaml && cat services/customers/app/customers.js && git status && git add . && git commit -m "update tag: ${DOCKER_TAG}" && git config --list && \
                         git push ${DEPLOYMENT_URL}
                     """
                 }
-                
             }
         }    
     }
+
     post { 
       always {
             echo  "End pipeline"
