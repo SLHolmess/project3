@@ -5,3 +5,5 @@ curl -X POST  http://bookapp.com/book/create -H 'Content-Type: application/json'
 kubectl -n kubernetes-dashboard patch svc kubernetes-dashboard --type='json' -p '[{"op":"replace","path":"/spec/type","value":"NodePort"},{"op":"replace","path":"/spec/ports/0/nodePort","value":30000}]'
 
 curl -X "DELETE" http://bookapp.com/customer/deleteById/63296e2ea3995d4b6e672b39
+
+curl -X POST  http://bookapp.com/order/create -H 'Content-Type: application/json' -d '{"customerID":"6329716291c9f8867dc8f306","bookID":"63296de601f68dc52b33206f","initialDate":"2022-09-20","deliveryDate":"2022-09-29"}
