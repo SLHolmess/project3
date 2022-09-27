@@ -18,7 +18,7 @@ app.post('/order/create', (req, res) => {
       deliveryDate: req.body.deliveryDate
    });
    newOrder.save().then(() => {
-      res.send('New order added successfully!')
+      res.send('New order added successfully!2')
    }).catch((err) => {
       res.status(500).send('Internal Server Error!');
    })
