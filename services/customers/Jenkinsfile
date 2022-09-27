@@ -6,7 +6,7 @@ pipeline {
 
     environment {
       GITURL= 'https://github.com/SLHolmess/project3.git'
-      IMAGE = "slholmess/books"
+      IMAGE = "slholmess/customers"
       IMAGE_REGISTRY = "https://index.docker.io/v1/"
       registryCredential = 'minh-dockerhub'
       gitCredential = 'minh-github'
