@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: orders-service
-          image: slholmess/orders:latest
+          image: slholmess/orders:20220927162223_1
           ports:
           - containerPort: 5000
           envFrom:
