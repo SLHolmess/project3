@@ -56,7 +56,7 @@ pipeline {
                         git config --global user.email "$BUILD_USER_EMAIL"
                         ls
                         rm -rf project3
-                        git clone ${DEPLOYMENT_URL} && cd project3 && git checkout book-service && \
+                        git clone ${DEPLOYMENT_URL} && cd project3 && git checkout deploy && \
                         sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/books/books-deployment.yaml && \
                         cat k8s-config/books/books-deployment.yaml && cat services/books/app/books.js && git status && git add . && git commit -m "update tag: ${DOCKER_TAG}" && git config --list && \
                         git push ${DEPLOYMENT_URL}
