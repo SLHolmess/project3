@@ -49,7 +49,7 @@ pipeline {
 
         stage("update docker tag") {
             steps {
-                    wwithCredentials([sshUserPrivateKey(credentialsId: 'minh-github-sshkey', keyFileVariable: '/root/.ssh/id_rsa')]) {
+                    withCredentials([sshUserPrivateKey(credentialsId: 'minh-github-sshkey', keyFileVariable: '/root/.ssh/id_rsa')]) {
                     sh """
                         git config --global user.name "$BUILD_USER"
                         git config --global user.email "$BUILD_USER_EMAIL"
