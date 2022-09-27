@@ -1,19 +1,22 @@
 pipeline {
-    agent {
-        label 'master'
-    }
+    // agent {
+    //     label 'master'
+    // }
+    agent any
 
     environment {
-      GITURL= 'https://github.com/hoangviet148/k8s-microservices.git'
-      IMAGE = "14802000/customers"
+      GITURL= 'https://github.com/SLHolmess/project3.git'
+      IMAGE = "slholmess/books"
       IMAGE_REGISTRY = "https://index.docker.io/v1/"
-      registryCredential = 'hoangviet148-dockerhub'
-      gitCredential = "hoangviet148-github"
+      registryCredential = 'minh-dockerhub'
+      gitCredential = 'minh-github'
+      gitCredentialssh = "minh-github-sshkey"
+      private_ssh_key_path = "/root/.ssh/id_rsa"
 
-      // docker-compose repo
-      BUILD_USER = 'hoangviet148'
-      BUILD_USER_EMAIL = 'nnvvhh148@gmail.com'
-      DOCKER_COMPOSE_URL = 'https://${username}:${password}@github.com/csd-build/esb/portainer-compose.git'
+      // deployment repo
+      BUILD_USER = 'SLHolmess'
+      BUILD_USER_EMAIL = 'ngocminh2962000@gmail.com'
+      DEPLOYMENT_URL = 'git@github.com:SLHolmess/project3.git'
     }
 
     stages {
@@ -43,20 +46,21 @@ pipeline {
             }
         }
 
-        // stage("update docker tag") {
-        //     steps {
-        //             withCredentials([usernamePassword(passwordVariable : 'password' ,usernameVariable : 'username' ,credentialsId : "$gitCredential" ,)]) {
-        //             sh """
-        //                 git config --global user.name "$BUILD_USER"
-        //                 git config --global user.email "$BUILD_USER_EMAIL"
-        //                 rm -rf portainer-compose
-        //                 git clone ${DOCKER_COMPOSE_URL} && cd portainer-compose
-        //                 sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" ./esb.yaml
-        //                 git add -A && git commit -m "update tag: ${DOCKER_TAG}" && git push ${DOCKER_COMPOSE_URL}
-        //             """
-        //         }
-        //     }
-        // }    
+        stage("update docker tag") {
+            steps {
+                    wwithCredentials([sshUserPrivateKey(credentialsId: 'minh-github-sshkey', keyFileVariable: '/root/.ssh/id_rsa')]) {
+                    sh """
+                        git config --global user.name "$BUILD_USER"
+                        git config --global user.email "$BUILD_USER_EMAIL"
+                        rm -rf project3
+                        git clone ${DEPLOYMENT_URL} && cd project3 && \
+                        sed -i "s#$IMAGE.*#${IMAGE}:${DOCKER_TAG}#g" k8s-config/customers/customers-deployment.yaml && \
+                        cat k8s-config/customers/customers-deployment.yaml && cat services/customers/app/customers.js && git status && git add . && git commit -m "update tag: ${DOCKER_TAG}" && git config --list && \
+                        git push ${DEPLOYMENT_URL}
+                    """
+                }
+            }
+        }    
     }
 
     post { 
