@@ -6,7 +6,7 @@ pipeline {
 
     environment {
       GITURL= 'https://github.com/SLHolmess/project3.git'
-      IMAGE = "slholmess/books"
+      IMAGE = "slholmess/orders"
       IMAGE_REGISTRY = "https://index.docker.io/v1/"
       registryCredential = 'minh-dockerhub'
       gitCredential = 'minh-github'
@@ -22,7 +22,8 @@ pipeline {
     stages {
         stage('Check-out GIT'){
             steps{
-                git credentialsId: "$gitCredential", url: "$GITURL"
+                // git credentialsId: "$gitCredential", url: "$GITURL"
+                git url:'https://github.com/SLHolmess/project3', branch:'main'
             }
         }
 
