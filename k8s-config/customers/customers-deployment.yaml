@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: customers-service
-          image: slholmess/customers:20221010171515_5
+          image: slholmess/customers:20221011030021_8
           ports:
           - containerPort: 4000
           envFrom:
