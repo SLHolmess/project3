@@ -12,7 +12,7 @@ app.use(express.json())
 app.post('/customer/create', (req, res) => {
     const newCustomer = new Customer({...req.body});
     newCustomer.save().then(() => {
-       res.send('New Customer created successfully!2');
+       res.send('New Customer created successfully4');
     }).catch((err) => {
         res.status(500).send('Internal Server Error!');
     })
